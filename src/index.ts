@@ -1,15 +1,17 @@
-import express, { Express, Request, Response } from 'express';
-import dotenv from 'dotenv';
+import 'dotenv/config';
+import { app } from './app';
+import { AppDataSource } from './shared/database';
 
-dotenv.config();
+async function main() {
+  try {
+    await AppDataSource.initialize();
+    console.log('📚 [Database]: database initialized');
+    app.listen(app.get('PORT'), () => {
+      console.log('⚡️ [Server]: server is running on port: ', app.get('PORT'));
+    })
+  } catch(err) {
+    console.error('ERROR: ', err);
+  }
+}
 
-const app: Express = express();
-const port = process.env.PORT;
-
-app.get('/', (req: Request, res: Response) => {
-  res.send('Express + TypeScript Server');
-});
-
-app.listen(port, () => {
-  console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
-});
+main();
