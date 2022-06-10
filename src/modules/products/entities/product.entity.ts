@@ -7,7 +7,7 @@ export class ProductEntity extends BaseEntity {
   id!: number;
   
   @Column({ type: 'integer' })
-  cantidad!: number;
+  count!: number;
   
   @Column()
   name!: string
@@ -18,7 +18,7 @@ export class ProductEntity extends BaseEntity {
   @Column({ type: 'float' })
   unitPrice!: number
 
-  @Column({ default: 'enabled' })
+  @Column({ default: 'available' })
   status!: string
   
   @Column({ nullable: true })
