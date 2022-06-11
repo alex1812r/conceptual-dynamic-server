@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { Like,  } from 'typeorm';
+import { IsNull, Like,  } from 'typeorm';
 import { ClientEntity } from '../entities/client-entity';
 
 type RequestQuery = {
@@ -10,10 +10,19 @@ export const getClientsList = async (req: Request<{}, {}, {}, RequestQuery>, res
 
   const clientsList = await ClientEntity.find({
     where: [
-      { name: Like(`%${q}%`) },
-      { lastname: Like(`%${q}%`) },
-      { dni: `%${q}%` }
-    ]
+      { 
+        name: Like(`%${q}%`),
+        deletedAt: IsNull()
+      },
+      { 
+        lastname: Like(`%${q}%`),
+        deletedAt: IsNull()
+      },
+      { 
+        dni: `%${q}%`,
+        deletedAt: IsNull()
+      }
+    ],
   });
   res.status(200).json({ clientsList })
 };

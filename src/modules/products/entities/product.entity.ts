@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { BaseEntity } from "../../../shared/entities/BaseEntity";
 import { OrderProductEntity } from "../../orders/entities/order-product.entity";
 @Entity({ name: 'product' })
@@ -23,6 +23,9 @@ export class ProductEntity extends BaseEntity {
   
   @Column({ nullable: true })
   imgUrl?: string
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt?: Date | null
 
   @OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.product)
   order!: OrderProductEntity

@@ -25,13 +25,16 @@ export class ClientEntity extends BaseEntity {
 
   @Column()
   @IsEmail()
-  email!: string
+  email!: string;
   
   @Column({ type: 'date' })
   dateOfBirth!: Date;
   
   @Column({ default: 'active' })
-  status!: string
+  status!: string;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt?: Date | null
 
   @OneToMany(() => OrderEntity, (order) => order.client)
   orders!: OrderEntity[]

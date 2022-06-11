@@ -24,6 +24,12 @@ export class OrderEntity extends BaseEntity{
   @Column({ type: 'float' })
   total!: number;
 
+  @Column({ type: 'date' })
+  orderDate!: Date;
+
+  @Column({ type: 'timestamp', nullable: true })
+  deletedAt?: Date | null
+
   @ManyToOne(() => ClientEntity, (client) => client.orders)
   @JoinColumn({ name: 'clientId' })
   client!: ClientEntity 
