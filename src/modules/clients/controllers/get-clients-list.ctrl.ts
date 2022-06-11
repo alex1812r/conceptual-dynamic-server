@@ -1,7 +1,19 @@
 import { Request, Response } from 'express';
+import { Like,  } from 'typeorm';
 import { ClientEntity } from '../entities/client-entity';
 
-export const getClientsList = async (_req: Request, res: Response) => {
-  const clientsList = await ClientEntity.find();
+type RequestQuery = {
+  q?: string;
+}
+export const getClientsList = async (req: Request<{}, {}, {}, RequestQuery>, res: Response) => {
+  const { q = '' } = req.query;  
+
+  const clientsList = await ClientEntity.find({
+    where: [
+      { name: Like(`%${q}%`) },
+      { lastname: Like(`%${q}%`) },
+      { dni: `%${q}%` }
+    ]
+  });
   res.status(200).json({ clientsList })
 };

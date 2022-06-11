@@ -6,7 +6,5 @@ import { getSingleClient } from './controllers/get-single-client.ctrl';
 export const clienstRouter = Router();
 
 clienstRouter.get('/', getClientsList);
-
 clienstRouter.get('/:id', getSingleClient);
-
 clienstRouter.post('/', createNewClient);

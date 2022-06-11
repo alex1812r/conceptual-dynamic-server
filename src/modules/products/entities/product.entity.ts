@@ -1,6 +1,6 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
-import { OrderEntity } from "../../orders/entities/order.entity";
-
+import { Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { BaseEntity } from "../../../shared/entities/BaseEntity";
+import { OrderProductEntity } from "../../orders/entities/order-product.entity";
 @Entity({ name: 'product' })
 export class ProductEntity extends BaseEntity {
   @PrimaryGeneratedColumn('increment')
@@ -24,6 +24,7 @@ export class ProductEntity extends BaseEntity {
   @Column({ nullable: true })
   imgUrl?: string
 
-  @ManyToMany(() => OrderEntity, (order) => order.products)
-  orders!: OrderEntity[]
+  @OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.product)
+  order!: OrderProductEntity
+
 }

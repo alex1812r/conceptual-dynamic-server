@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { IsEmail, Length, Max, Min } from "class-validator";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { IsEmail, Length } from "class-validator";
 import { OrderEntity } from "../../orders/entities/order.entity";
+import { BaseEntity } from "../../../shared/entities/BaseEntity";
 
 @Entity({ name: 'client' })
 export class ClientEntity extends BaseEntity {

@@ -1,15 +1,34 @@
-import { Entity, ManyToMany, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { 
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  Column,
+  JoinColumn,
+  OneToMany, 
+} from "typeorm";
 import { ClientEntity } from "../../clients/entities/client-entity";
-import { ProductEntity } from "../../products/entities/product.entity";
+import { BaseEntity } from "../../../shared/entities/BaseEntity";
+import { OrderProductEntity } from "./order-product.entity";
 
 @Entity({ name: 'order' })
-export class OrderEntity {
+export class OrderEntity extends BaseEntity{
   @PrimaryGeneratedColumn('increment')
   id!: number;
   
-  @ManyToOne(() => ClientEntity, (client) => client.orders)
-  client!: ClientEntity
+  @Column({ default: 'pending' })
+  status!: string;
 
-  @ManyToMany(() => ProductEntity, (product) => product.orders)
-  products!: ProductEntity[]
+  @Column({ type: 'integer' })
+  clientId!: number;
+
+  @Column({ type: 'float' })
+  total!: number;
+
+  @ManyToOne(() => ClientEntity, (client) => client.orders)
+  @JoinColumn({ name: 'clientId' })
+  client!: ClientEntity 
+
+  @OneToMany(() => OrderProductEntity, (product) => product.order)
+  orderProducts!: OrderProductEntity[]
+
 }
