@@ -1,4 +1,5 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Min } from "class-validator";
 import { ProductEntity } from "../../products/entities/product.entity";
 import { OrderEntity } from "./order.entity";
 import { BaseEntity } from "../../../shared/entities/BaseEntity";
@@ -9,6 +10,7 @@ export class OrderProductEntity extends BaseEntity {
   id!: number;
   
   @Column({ type: 'integer' })
+  @Min(1)
   count!: number
   
   @Column({ type: 'float' })

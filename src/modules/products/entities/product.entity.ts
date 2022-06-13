@@ -1,4 +1,5 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Min } from "class-validator";
 import { BaseEntity } from "../../../shared/entities/BaseEntity";
 import { OrderProductEntity } from "../../orders/entities/order-product.entity";
 @Entity({ name: 'product' })
@@ -7,6 +8,7 @@ export class ProductEntity extends BaseEntity {
   id!: number;
   
   @Column({ type: 'integer' })
+  @Min(0)
   count!: number;
   
   @Column()
@@ -16,6 +18,7 @@ export class ProductEntity extends BaseEntity {
   description?: string
 
   @Column({ type: 'float' })
+  @Min(0)
   unitPrice!: number
 
   @Column({ default: 'available' })
