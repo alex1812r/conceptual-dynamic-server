@@ -5,7 +5,7 @@ export const createNewProduct = async (req: Request, res: Response) => {
   const product = new ProductEntity();
   product.name = req.body.name;
   product.count = req.body.count;
-  product.description = req.body.name;
+  product.description = req.body.description;
   product.unitPrice = req.body.unitPrice;
   product.imgUrl = req.body.imgUrl;
 

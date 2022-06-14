@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { createNewOrder } from './controllers/create-new-order.ctrl';
-import { deleteOrder } from './controllers/delete-client.ctrl';
+import { deleteOrder } from './controllers/delete-order.ctrl';
 import { getOrdersList } from './controllers/get-orders-list.ctrl';
 import { getSingleOrder } from './controllers/get-single-order.ctrl';
 
