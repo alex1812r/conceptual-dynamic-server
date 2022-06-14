@@ -9,6 +9,7 @@ import {
 import { ClientEntity } from "../../clients/entities/client-entity";
 import { BaseEntity } from "../../../shared/entities/BaseEntity";
 import { OrderProductEntity } from "./order-product.entity";
+import { OrderStatusType } from "../orders.types";
 
 @Entity({ name: 'order' })
 export class OrderEntity extends BaseEntity{
@@ -16,7 +17,7 @@ export class OrderEntity extends BaseEntity{
   id!: number;
   
   @Column({ default: 'pending' })
-  status!: string;
+  status!: OrderStatusType;
 
   @Column({ type: 'integer' })
   clientId!: number;
@@ -26,6 +27,9 @@ export class OrderEntity extends BaseEntity{
 
   @Column({ type: 'date' })
   orderDate!: Date;
+
+  @Column({ type: 'text', nullable: true })
+  description?: string;
 
   @Column({ type: 'timestamp', nullable: true })
   deletedAt?: Date | null

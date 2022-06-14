@@ -7,6 +7,7 @@ import { OrderEntity } from "../entities/order.entity";
 type RequestBody = { 
   clientId: number;
   orderDate: string;
+  description?: string;
   orderProducts: Array<{
     productId: number;
     count: number;
@@ -41,6 +42,7 @@ export const createNewOrder = async (req: Request<{}, {}, RequestBody>, res: Res
   const order = new OrderEntity();
   order.orderDate = new Date(req.body.orderDate);
   order.client = client;
+  order.description = req.body.description;
   order.total = 0;
   
   const orderProducts: Array<OrderProductEntity> = [];
@@ -64,7 +66,7 @@ export const createNewOrder = async (req: Request<{}, {}, RequestBody>, res: Res
 
     const orderProduct = new OrderProductEntity();
     orderProduct.count = item.count;
-    orderProduct.productId = product.id; 
+    orderProduct.productId = product.id;
     orderProduct.amount = product.unitPrice * orderProduct.count;
     order.total += orderProduct.amount;
     
