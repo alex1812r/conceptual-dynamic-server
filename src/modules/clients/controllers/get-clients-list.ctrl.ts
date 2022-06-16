@@ -1,14 +1,16 @@
 import { Request, Response } from 'express';
-import { IsNull, Like,  } from 'typeorm';
+import { FindManyOptions, IsNull, Like,  } from 'typeorm';
 import { ClientEntity } from '../entities/client-entity';
 
 type RequestQuery = {
   q?: string;
+  skip?: string;
+  take?: string;
 }
 export const getClientsList = async (req: Request<{}, {}, {}, RequestQuery>, res: Response) => {
-  const { q = '' } = req.query;  
+  const { q = '', skip = 0, take = 20 } = req.query;  
 
-  const clientsList = await ClientEntity.find({
+  const options: FindManyOptions<ClientEntity> = {
     where: [
       { 
         name: Like(`%${q}%`),
@@ -21,8 +23,16 @@ export const getClientsList = async (req: Request<{}, {}, {}, RequestQuery>, res
       { 
         dni: `%${q}%`,
         deletedAt: IsNull()
-      }
+      },
     ],
-  });
-  res.status(200).json({ clientsList })
+    take: Number(take),
+    skip: Number(skip),
+  }
+  
+  const [clientsList, count] = await Promise.all([
+    ClientEntity.find(options),
+    ClientEntity.count(options)
+  ])
+
+  res.status(200).json({ clientsList, count })
 };

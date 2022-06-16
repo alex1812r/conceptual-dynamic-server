@@ -4,6 +4,7 @@ import { ClientEntity } from "../modules/clients/entities/client-entity";
 import { ProductEntity } from "../modules/products/entities/product.entity";
 import { OrderEntity } from "../modules/orders/entities/order.entity";
 import { OrderProductEntity } from "../modules/orders/entities/order-product.entity";
+import { FileEntity } from "../modules/files/entities/Files.entity";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -12,7 +13,13 @@ export const AppDataSource = new DataSource({
   username: DB_USERNAME,
   password: DB_PASSWORD,
   database: DB_NAME,
-  entities: [ClientEntity, ProductEntity, OrderEntity, OrderProductEntity],
+  entities: [
+    ClientEntity,
+    ProductEntity,
+    OrderEntity,
+    OrderProductEntity,
+    FileEntity
+  ],
   synchronize: true,
   logging: false,
 });

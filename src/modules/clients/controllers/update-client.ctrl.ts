@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { QueryDeepPartialEntity } from "typeorm/query-builder/QueryPartialEntity";
 import { ClientEntity } from "../entities/client-entity";
 
 type RequestParams = {
@@ -15,8 +16,8 @@ type RequestBody = Partial<{
 }>
 export const updateClient = async (req: Request<RequestParams, {}, RequestBody>, res: Response) => {
   const clientId = Number(req.params.id);
-  
-  const newData = {
+
+  const updateData: QueryDeepPartialEntity<ClientEntity> = {
     name: req.body.name,
     lastname: req.body.lastname,
     dni: req.body.dni,
@@ -26,9 +27,10 @@ export const updateClient = async (req: Request<RequestParams, {}, RequestBody>,
     status: req.body.status,
   };
 
-  await ClientEntity.update({ id: clientId }, newData);
+  const updatedClient = await ClientEntity
+    .update({ id: clientId }, updateData)
+    .then(() => ClientEntity.findOneBy({ id: clientId }));
 
-  const updatedClient = await ClientEntity.findOneBy({ id: clientId }); 
 
   res.status(200).json({ client: updatedClient });
 }
